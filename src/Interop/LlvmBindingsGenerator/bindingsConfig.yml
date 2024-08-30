@@ -798,6 +798,36 @@ FunctionBindings:
   - Name: LibLLVMGetConstantDataSequentialRawData
     ReturnTransform: !Unsafe {}
 
+  - Name: llvm_blake3_version
+    IsProjected: false
+
+  - Name: LLVMGetInlineAsmAsmString
+    IsProjected: false
+
+  - Name: LLVMGetInlineAsmConstraintString
+    IsProjected: false
+
+  - Name: LLVMIntrinsicCopyOverloadedName2
+    IsProjected: false
+
+  - Name: LLVMGetOperandBundleTag
+    IsProjected: false
+
+  - Name: LLVMOrcLLJITGetTripleString
+    IsProjected: false
+
+  - Name: LLVMOrcLLJITGetDataLayoutStr
+    IsProjected: false
+
+  - Name: LLVMOrcSymbolStringPoolEntryStr
+    IsProjected: false
+
+  - Name: LLVMOrcMaterializationResponsibilityGetRequestedSymbols
+    IsProjected: false
+
+  - Name: LLVMOrcJITTargetMachineBuilderGetTargetTriple
+    IsProjected: false
+
 # The HandleMap Lists the types of handles and their disposal semantics
 #HandleMap:
 #    - !ContextHandle { HandleName: LLVMTypeRef}
@@ -816,7 +846,6 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMDIBuilderRef, Disposer: LLVMDisposeDIBuilder, Alias: False}
   - !GlobalHandle {HandleName: LLVMModuleProviderRef, Disposer: LLVMDisposeModuleProvider, Alias: False}
   - !GlobalHandle {HandleName: LLVMPassManagerRef, Disposer: LLVMDisposePassManager, Alias: False}
-  - !GlobalHandle {HandleName: LLVMPassRegistryRef, Disposer: LLVMPassRegistryDispose, Alias: False}
   - !ContextHandle {HandleName: LLVMUseRef }
   - !ContextHandle {HandleName: LLVMAttributeRef }
   - !ContextHandle {HandleName: LLVMDiagnosticInfoRef }
@@ -835,14 +864,36 @@ HandleMap:
   - !GlobalHandle {HandleName: LLVMSectionIteratorRef, Disposer: LLVMDisposeSectionIterator, Alias: False}
   - !GlobalHandle {HandleName: LLVMSymbolIteratorRef, Disposer: LLVMDisposeSymbolIterator, Alias: False}
   - !GlobalHandle {HandleName: LLVMRelocationIteratorRef, Disposer: LLVMDisposeRelocationIterator, Alias: False}
-  - !GlobalHandle {HandleName: LLVMOrcJITStackRef, Disposer: LLVMOrcDisposeInstance, Alias: False}
-  - !GlobalHandle {HandleName: LLVMPassManagerBuilderRef, Disposer: LLVMPassManagerBuilderDispose, Alias: False}
   - !GlobalHandle {HandleName: LLVMValueMetadataEntry, Disposer: LLVMDisposeValueMetadataEntries, Alias: False}
   - !GlobalHandle {HandleName: LLVMModuleFlagEntry, Disposer: LLVMDisposeModuleFlagsMetadata, Alias: False}
   - !GlobalHandle {HandleName: LLVMDisasmContextRef, Disposer: LLVMDisasmDispose, Alias: False}
   - !GlobalHandle {HandleName: LibLLVMTripleRef, Disposer: LibLLVMDisposeTriple, Alias: False}
   - !GlobalHandle {HandleName: LibLLVMValueCacheRef, Disposer: LibLLVMDisposeValueCache, Alias: False}
   - !ContextHandle {HandleName: LibLLVMMDOperandRef}
+  - !ContextHandle {HandleName: LLVMOperandBundleRef}
+  - !ContextHandle {HandleName: LLVMTargetMachineOptionsRef}
+  - !ContextHandle {HandleName: LLVMOrcLLJITBuilderRef}
+  - !ContextHandle {HandleName: LLVMOrcLLJITRef}
+  - !ContextHandle {HandleName: LLVMOrcExecutionSessionRef }
+  - !ContextHandle {HandleName: LLVMOrcSymbolStringPoolRef }
+  - !ContextHandle {HandleName: LLVMOrcSymbolStringPoolEntryRef }
+  - !ContextHandle {HandleName: LLVMOrcJITDylibRef }
+  - !ContextHandle {HandleName: LLVMOrcMaterializationUnitRef }
+  - !ContextHandle {HandleName: LLVMOrcMaterializationResponsibilityRef }
+  - !ContextHandle {HandleName: LLVMOrcResourceTrackerRef }
+  - !ContextHandle {HandleName: LLVMOrcDefinitionGeneratorRef }
+  - !ContextHandle {HandleName: LLVMOrcLookupStateRef }
+  - !ContextHandle {HandleName: LLVMOrcThreadSafeContextRef }
+  - !ContextHandle {HandleName: LLVMOrcThreadSafeModuleRef }
+  - !ContextHandle {HandleName: LLVMOrcJITTargetMachineBuilderRef }
+  - !ContextHandle {HandleName: LLVMOrcObjectLayerRef }
+  - !ContextHandle {HandleName: LLVMOrcObjectLinkingLayerRef }
+  - !ContextHandle {HandleName: LLVMOrcIRTransformLayerRef }
+  - !ContextHandle {HandleName: LLVMOrcObjectTransformLayerRef }
+  - !ContextHandle {HandleName: LLVMOrcIndirectStubsManagerRef }
+  - !ContextHandle {HandleName: LLVMOrcLazyCallThroughManagerRef }
+  - !ContextHandle {HandleName: LLVMOrcDumpObjectsRef }
+  - !ContextHandle {HandleName: LLVMPassBuilderOptionsRef }
 
 # C/C++ allow anonymous enums that effectively introduce a const into the parent namespace.
 # Generally, that's not desired for the interop. In fact the only known use cases for this
@@ -860,8 +911,8 @@ HandleMap:
 AnonymousEnums:
   LLVMAttributeReturnIndex: LLVMAttributeIndex
   LLVMMDStringMetadataKind: LLVMMetadataKind
+  LLVMFastMathAllowReassoc: LLVMFastMathAllowReassoc
 
 IgnoredHeaders:
-  - llvm-c/LinkTimeOptimizer.h
   - llvm-c/lto.h
   - llvm-c/Remarks.h

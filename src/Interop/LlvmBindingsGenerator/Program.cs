@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -42,7 +43,12 @@ namespace LlvmBindingsGenerator
                 // but either way, it helps keep the declarative part in a more easily edited format.
                 var config = new ReadOnlyConfig( YamlConfiguration.ParseFrom( configPath ) );
                 var library = new LibLlvmGeneratorLibrary( config, options.LlvmRoot, options.ExtensionsRoot, options.OutputPath );
-                Driver.Run( library );
+                foreach(var targetPlatform in new[] { TargetPlatform.Windows })
+                {
+                    Diagnostics.Message( $"Generating bindings for {targetPlatform}" );
+
+                    Driver.Run( library, targetPlatform );
+                }
             }
             catch(IOException ioex)
             {

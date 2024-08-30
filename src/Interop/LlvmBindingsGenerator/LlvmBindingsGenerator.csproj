@@ -12,7 +12,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
-        <PackageReference Include="CppSharp" Version="1.0.0" />
+        <PackageReference Include="CppSharp" Version="1.1.5.3168" />
         <PackageReference Include="System.CodeDom" Version="8.0.0" />
         <PackageReference Include="Ubiquity.ArgValidators" Version="6.0.1" />
         <PackageReference Include="YamlDotNet" Version="11.2.1" />

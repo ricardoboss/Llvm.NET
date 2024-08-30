@@ -50,15 +50,15 @@ namespace LlvmBindingsGenerator
 
         public CppSharp.Parser.ParserOptions ParserOptions { get; }
 
-        public BindingContext Context { get; private set; }
+        public BindingContext? Context { get; private set; }
 
         public void SetupTypeMaps() =>
-            Context.TypeMaps = new TypeMapDatabase( Context );
+            Context!.TypeMaps = new TypeMapDatabase( Context );
 
-        public void Setup()
+        public void Setup(TargetPlatform targetPlatform)
         {
             ValidateOptions();
-            ParserOptions.Setup();
+            ParserOptions.Setup(targetPlatform);
             Context = new BindingContext( Options, ParserOptions );
         }
 
@@ -173,21 +173,17 @@ namespace LlvmBindingsGenerator
 
         public void Dispose()
         {
-            if( Context != null )
-            {
-                Context.TargetInfo.Dispose();
-            }
-
+            Context?.TargetInfo?.Dispose();
             ParserOptions.Dispose();
             CppSharp.AST.Type.TypePrinterDelegate = null;
         }
 
-        public static void Run( ILibrary library )
+        public static void Run( ILibrary library, TargetPlatform targetPlatform )
         {
             using var driver = new Driver();
             var options = driver.Options;
             library.Setup( driver );
-            driver.Setup();
+            driver.Setup( targetPlatform );
 
             Diagnostics.Message( "Parsing libraries..." );
             if( !driver.ParseLibraries() )
