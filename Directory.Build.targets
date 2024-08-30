@@ -10,23 +10,22 @@
   will ensure the folder exists during restore so that it won't fail.
   -->
     <Target Name="CreateBuildOutputNuget" BeforeTargets="Restore;Build;Rebuild">
-        <MakeDir Directories="$(MSBuildThisFileDirectory)BuildOutput\NuGet" />
+        <MakeDir Directories="$(MSBuildThisFileDirectory)BuildOutput\NuGet"/>
     </Target>
 
     <Target Name="SetProjectSpecficVersionDependentProperties" AfterTargets="SetVersionDependentProperties">
         <PropertyGroup>
             <LlvmVersion Condition="'$(LlvmVersion)'==''">$(LlvmVersionMajor).$(LlvmVersionMinor).$(LlvmVersionPatch)</LlvmVersion>
-            <NuspecProperties Condition="'$(NuspecFile)'!=''" >version=$(PackageVersion);llvmversion=$(LlvmVersion);buildbinoutput=$(BaseOutputPath);configuration=$(Configuration);$(NuspecProperties)</NuspecProperties>
+            <NuspecProperties Condition="'$(NuspecFile)'!=''">version=$(PackageVersion);llvmversion=$(LlvmVersion);buildbinoutput=$(BaseOutputPath);configuration=$(Configuration);$(NuspecProperties)</NuspecProperties>
         </PropertyGroup>
     </Target>
 
     <!-- Download nuget.exe if it isn't found-->
-    <Target Name="_DownloadNugetExe" >
-        <MakeDir Directories="$(PackageOutputPath)" Condition="!EXISTS('$(PackageOutputPath')" />
+    <Target Name="_DownloadNugetExe">
+        <MakeDir Directories="$(PackageOutputPath)" Condition="!EXISTS('$(PackageOutputPath')"/>
         <DownloadFile Condition="!EXISTS('$(PackageOutputPath)\NuGet.exe')"
                       SourceUrl="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
-                      DestinationPath="$(PackageOutputPath)\NuGet.exe"
-                  />
+                      DestinationFolder="$(PackageOutputPath)"/>
     </Target>
 
     <!--
@@ -38,22 +37,22 @@
     <Target Name="_SetNuSpecPropertiesWithBuildInfo"
             BeforeTargets="GenerateNuspec"
             Condition="'$(MSBuildProjectExtension)'=='.csproj' AND $(GeneratePackageOnBuild)=='true'"
-            >
+    >
         <PropertyGroup>
             <Description>$(Description) $(llvmVersion)</Description>
         </PropertyGroup>
-        <Message Importance="high" Text="llvmVersion=$(llvmVersion)" />
+        <Message Importance="high" Text="llvmVersion=$(llvmVersion)"/>
     </Target>
 
     <Target Name="EnsureLocalNugetFolder" Condition="!EXISTS($(PackageOutputPath))" BeforeTargets="Restore">
-        <MakeDir Directories="$(PackageOutputPath)" />
+        <MakeDir Directories="$(PackageOutputPath)"/>
     </Target>
 
     <!-- Custom task to download a file from a web URL -->
     <UsingTask TaskName="DownloadFile"
                TaskFactory="CodeTaskFactory"
                AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll"
-           >
+    >
         <ParameterGroup>
             <SourceUrl ParameterType="System.String" Required="true"/>
             <DestinationPath ParameterType="System.String" Required="true"/>
@@ -72,7 +71,7 @@
     <!-- Create NuGet packages for NuSpec property in VCXPROJ projects -->
     <Target Name="Pack" DependsOnTargets="_DownloadNugetExe;SetProjectSpecficVersionDependentProperties" Condition="'$(MSBuildProjectExtension)'=='.vcxproj'">
         <Exec Condition="exists('$(NuSpecFile)')"
-              Command='"$(PackageOutputPath)NuGet.exe" pack $(NuSpecFile) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties) -NoPackageAnalysis' />
+              Command='"$(PackageOutputPath)NuGet.exe" pack $(NuSpecFile) -OutputDirectory $(PackageOutputPath) -Properties $(NuspecProperties) -NoPackageAnalysis'/>
     </Target>
 
     <Target Name="EnsureBuildOutputPaths" BeforeTargets="Build;Restore">
@@ -80,11 +79,11 @@
     </Target>
 
     <Target Name="ShowBuildParameters" AfterTargets="SetProjectSpecficVersionDependentProperties">
-        <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)" />
-        <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)" />
-        <Message Importance="normal" Text="BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)" />
-        <Message Importance="normal" Text="                    IntDir: $(IntDir)" />
-        <Message Importance="normal" Text="            BaseOutputPath: $(BaseOutputPath)" />
+        <Message Importance="normal" Text="              BuildRootDir: $(BuildRootDir)"/>
+        <Message Importance="normal" Text="       BaseBuildOutputPath: $(BaseBuildOutputPath)"/>
+        <Message Importance="normal" Text="BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)"/>
+        <Message Importance="normal" Text="                    IntDir: $(IntDir)"/>
+        <Message Importance="normal" Text="            BaseOutputPath: $(BaseOutputPath)"/>
         <Message Importance="normal" Text="           FullBuildNumber: $(FullBuildNumber)"/>
         <Message Importance="normal" Text="            PackageVersion: $(PackageVersion)"/>
         <Message Importance="normal" Text="               FileVersion: $(FileVersion)"/>

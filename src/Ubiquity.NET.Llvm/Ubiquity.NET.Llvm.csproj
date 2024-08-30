@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Sdk Name="Microsoft.Build.CentralPackageVersions" />
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <DebugType>portable</DebugType>
@@ -35,8 +34,8 @@
         </CodeAnalysisDictionary>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="System.Memory" />
-        <PackageReference Include="Ubiquity.NET.Llvm.Interop" VersionOverride="[10.0.0-*,11)" />
+        <PackageReference Include="System.Memory" Version="4.5.5" />
+        <PackageReference Include="Ubiquity.NET.Llvm.Interop" Version="[10.0.0-*,11)" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">

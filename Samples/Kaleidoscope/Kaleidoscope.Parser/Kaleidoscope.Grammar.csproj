@@ -1,15 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Sdk Name="Microsoft.Build.CentralPackageVersions" />
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
-
     <ItemGroup>
-        <PackageReference Include="Antlr4" />
-        <PackageReference Include="OpenSoftware.DgmlBuilder" />
-        <PackageReference Include="System.Collections.Immutable" />
-        <PackageReference Include="Ubiquity.ArgValidators" />
+      <PackageReference Include="Antlr4" Version="4.6.6">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
+      <PackageReference Include="OpenSoftware.DgmlBuilder" Version="2.0.0" />
+      <PackageReference Include="Ubiquity.ArgValidators" Version="6.0.1" />
     </ItemGroup>
 
     <!-- inline task from https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild -->

@@ -4,6 +4,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -40,7 +41,7 @@ namespace Kaleidoscope.Tests
 
         public override void WriteLine( )
         {
-            Context.WriteLine( Builder.ToString( ) );
+            Debug.WriteLine( Builder.ToString( ) );
             Builder.Clear( );
         }
 

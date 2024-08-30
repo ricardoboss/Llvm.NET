@@ -5,6 +5,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace Kaleidoscope.Tests
             // Read, Parse, Print loop
             foreach( IAstNode node in nodes )
             {
-                TestContext.WriteLine( "PARSED: {0}", node );
+                Debug.WriteLine( "PARSED: {0}", node );
             }
         }
 
@@ -125,15 +126,15 @@ namespace Kaleidoscope.Tests
                     switch( result.Value )
                     {
                     case ConstantFP value:
-                        TestContext.WriteLine( "Evaluated to {0}", value.Value );
+                        Debug.WriteLine( "Evaluated to {0}", value.Value );
                         break;
 
                     case IrFunction function:
-                        TestContext.WriteLine( "Generated:\n{0}", function.ToString( ) );
+                        Debug.WriteLine( "Generated:\n{0}", function.ToString( ) );
                         break;
 
                     default:
-                        TestContext.WriteLine( result.Value!.ToString( ) );
+                        Debug.WriteLine( result.Value!.ToString( ) );
                         break;
                     }
                 }
